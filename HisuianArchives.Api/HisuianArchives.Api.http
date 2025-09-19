@@ -1,0 +1,6 @@
+@HisuianArchives.Api_HostAddress = http://localhost:5073
+
+GET {{HisuianArchives.Api_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###

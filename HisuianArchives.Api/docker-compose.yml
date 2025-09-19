@@ -1,0 +1,36 @@
+version: '3.8'
+
+services:
+
+  db:
+    image: mysql:8.0.33 
+    container_name: hisuian-db 
+    restart: always 
+    environment:
+      MYSQL_ROOT_PASSWORD: admin 
+      MYSQL_DATABASE: hisuian_archives_db 
+      MYSQL_USER: user_api 
+      MYSQL_PASSWORD: admin 
+    ports:
+      - "3306:3306"
+    volumes:
+      - hisuian_db_data:/var/lib/mysql
+      
+  minio:
+    image: minio/minio:RELEASE.2023-07-21T21-12-44Z 
+    container_name: hisuian-minio
+    restart: always
+    environment:
+      MINIO_ROOT_USER: minioadmin 
+      MINIO_ROOT_PASSWORD: minioadmin_password 
+    ports:
+      - "9000:9000"
+      - "9001:9001"
+    volumes:
+      - hisuian_minio_data:/data
+
+    command: server /data --console-address ":9001"
+
+volumes:
+  hisuian_db_data:
+  hisuian_minio_data:
