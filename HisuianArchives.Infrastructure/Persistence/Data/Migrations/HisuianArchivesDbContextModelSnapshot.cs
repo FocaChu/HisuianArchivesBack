@@ -30,11 +30,31 @@ namespace HisuianArchives.Infrastructure.Migrations
 
                     b.Property<string>("Name")
                         .IsRequired()
-                        .HasColumnType("longtext");
+                        .HasColumnType("varchar(255)");
 
                     b.HasKey("Id");
 
+                    b.HasIndex("Name")
+                        .IsUnique();
+
                     b.ToTable("Roles");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = new Guid("ce42685b-6801-4bfe-845f-49a4c5aa5b34"),
+                            Name = "Customer"
+                        },
+                        new
+                        {
+                            Id = new Guid("1937dad9-7fd6-47c5-9b43-9018a95c0d9b"),
+                            Name = "Pro"
+                        },
+                        new
+                        {
+                            Id = new Guid("89f6988b-3737-4bca-9313-a26d7ad58c2c"),
+                            Name = "Admin"
+                        });
                 });
 
             modelBuilder.Entity("HisuianArchives.Domain.Entities.User", b =>
@@ -51,7 +71,7 @@ namespace HisuianArchives.Infrastructure.Migrations
 
                     b.Property<string>("Email")
                         .IsRequired()
-                        .HasColumnType("longtext");
+                        .HasColumnType("varchar(255)");
 
                     b.Property<string>("Name")
                         .IsRequired()
@@ -69,6 +89,9 @@ namespace HisuianArchives.Infrastructure.Migrations
 
                     b.HasKey("Id");
 
+                    b.HasIndex("Email")
+                        .IsUnique();
+
                     b.ToTable("Users");
                 });
 
@@ -84,7 +107,7 @@ namespace HisuianArchives.Infrastructure.Migrations
 
                     b.HasIndex("UsersId");
 
-                    b.ToTable("RoleUser");
+                    b.ToTable("UserRoles", (string)null);
                 });
 
             modelBuilder.Entity("RoleUser", b =>
