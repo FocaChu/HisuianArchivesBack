@@ -29,21 +29,29 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
 // Configure CORS to allow requests from Angular frontend
+var MyAllowSpecificOrigins = "_myAllowSpecificOrigins";
+
 builder.Services.AddCors(options =>
 {
-    options.AddPolicy("AllowAngular", policy =>
+    options.AddPolicy(name: MyAllowSpecificOrigins,policy =>
     {
-        policy.WithOrigins("http://localhost:4200")
-              .AllowAnyMethod()
-              .AllowAnyHeader();
+        policy.WithOrigins
+        (
+            "http://localhost:4200",
+            "https://hisuian-archives.vercel.app", 
+            "https://*.ngrok-free.app"
+        )
+        .AllowAnyHeader()
+        .AllowAnyMethod();
     });
 });
+
 
 // Configure Entity Framework and MySQL
 var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
 if (string.IsNullOrEmpty(connectionString))
 {
-    throw new InvalidOperationException("A string de conexão 'DefaultConnection' não está configurada.");
+    throw new InvalidOperationException("The connection string 'DefaultConnection' is not configured.");
 }
 builder.Services.AddDbContext<HisuianArchivesDbContext>(options =>
     options.UseMySql(connectionString, ServerVersion.AutoDetect(connectionString)));
@@ -91,9 +99,11 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI();
 }
 
-app.UseCors("AllowAngular");
+app.UseRouting();
 
-//app.UseHttpsRedirection();
+app.UseCors(MyAllowSpecificOrigins);
+
+app.UseHttpsRedirection();
 
 app.UseAuthentication();
 
@@ -103,6 +113,7 @@ app.MapControllers();
 
 app.MapHealthChecks("/health", new HealthCheckOptions
 {
+    // Este ResponseWriter força a saída a ser um JSON detalhado
     ResponseWriter = UIResponseWriter.WriteHealthCheckUIResponse
 });
 
