@@ -42,17 +42,17 @@ namespace HisuianArchives.Infrastructure.Migrations
                     b.HasData(
                         new
                         {
-                            Id = new Guid("ce42685b-6801-4bfe-845f-49a4c5aa5b34"),
+                            Id = new Guid("11111111-1111-1111-1111-111111111111"),
                             Name = "Customer"
                         },
                         new
                         {
-                            Id = new Guid("1937dad9-7fd6-47c5-9b43-9018a95c0d9b"),
+                            Id = new Guid("22222222-2222-2222-2222-222222222222"),
                             Name = "Pro"
                         },
                         new
                         {
-                            Id = new Guid("89f6988b-3737-4bca-9313-a26d7ad58c2c"),
+                            Id = new Guid("33333333-3333-3333-3333-333333333333"),
                             Name = "Admin"
                         });
                 });
@@ -80,9 +80,6 @@ namespace HisuianArchives.Infrastructure.Migrations
                     b.Property<string>("PasswordHash")
                         .IsRequired()
                         .HasColumnType("longtext");
-
-                    b.Property<Guid?>("ProfileImageId")
-                        .HasColumnType("char(36)");
 
                     b.Property<DateTime>("UpdatedAt")
                         .HasColumnType("datetime(6)");

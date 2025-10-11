@@ -16,16 +16,24 @@ public class User
 
     public string PasswordHash { get; private set; }
 
-    public Guid? ProfileImageId { get; private set; }
-
     public virtual ICollection<Role> Roles { get; private set; } = new List<Role>();
-
 
     private User() { }
 
-
     public User(string name, string email, string passwordHash, string? bio)
     {
+        if (string.IsNullOrWhiteSpace(name))
+            throw new ArgumentException("Name cannot be empty", nameof(name));
+        
+        if (string.IsNullOrWhiteSpace(email))
+            throw new ArgumentException("Email cannot be empty", nameof(email));
+            
+        if (!IsValidEmail(email))
+            throw new ArgumentException("Invalid email format", nameof(email));
+        
+        if (string.IsNullOrWhiteSpace(passwordHash))
+            throw new ArgumentException("Password hash cannot be empty", nameof(passwordHash));
+
         Id = Guid.NewGuid();
         Name = name;
         Email = email;
@@ -33,5 +41,70 @@ public class User
         Bio = bio;
         CreatedAt = DateTime.UtcNow;
         UpdatedAt = DateTime.UtcNow;
+    }
+
+    public void UpdateProfile(string name, string? bio)
+    {
+        if (string.IsNullOrWhiteSpace(name))
+            throw new ArgumentException("Name cannot be empty", nameof(name));
+            
+        Name = name;
+        Bio = bio;
+        UpdatedAt = DateTime.UtcNow;
+    }
+    
+    public void UpdateEmail(string email)
+    {
+        if (string.IsNullOrWhiteSpace(email))
+            throw new ArgumentException("Email cannot be empty", nameof(email));
+            
+        if (!IsValidEmail(email))
+            throw new ArgumentException("Invalid email format", nameof(email));
+            
+        Email = email;
+        UpdatedAt = DateTime.UtcNow;
+    }
+    
+    public void ChangePassword(string newPasswordHash)
+    {
+        if (string.IsNullOrWhiteSpace(newPasswordHash))
+            throw new ArgumentException("Password hash cannot be empty", nameof(newPasswordHash));
+            
+        PasswordHash = newPasswordHash;
+        UpdatedAt = DateTime.UtcNow;
+    }
+    
+    public void AddRole(Role role)
+    {
+        if (role == null)
+            throw new ArgumentNullException(nameof(role));
+            
+        if (!Roles.Any(r => r.Id == role.Id))
+        {
+            Roles.Add(role);
+            UpdatedAt = DateTime.UtcNow;
+        }
+    }
+    
+    public void RemoveRole(Role role)
+    {
+        if (role == null)
+            throw new ArgumentNullException(nameof(role));
+            
+        Roles.Remove(role);
+        UpdatedAt = DateTime.UtcNow;
+    }
+    
+    private bool IsValidEmail(string email)
+    {
+        try
+        {
+            var addr = new System.Net.Mail.MailAddress(email);
+            return addr.Address == email;
+        }
+        catch
+        {
+            return false;
+        }
     }
 }

@@ -1,6 +1,7 @@
 using HealthChecks.UI.Client;
 using HisuianArchives.Api.Middleware;
 using HisuianArchives.Application.Interfaces;
+using HisuianArchives.Application.Orchestrators;
 using HisuianArchives.Application.Services;
 using HisuianArchives.Domain.Entities;
 using HisuianArchives.Domain.Repositories;
@@ -55,6 +56,8 @@ builder.Services.AddScoped<IRoleRepository, RoleRepository>();
 builder.Services.AddScoped<IPasswordService, PasswordService>();
 builder.Services.AddScoped<ITokenService, TokenService>();
 builder.Services.AddScoped<IAuthService, AuthService>();
+builder.Services.AddScoped<IUserService, UserService>();
+builder.Services.AddScoped<IUserOnboardingOrchestrator, UserOnboardingOrchestrator>();
 
 builder.Services.AddScoped<IPasswordHasher<User>, PasswordHasher<User>>();
 

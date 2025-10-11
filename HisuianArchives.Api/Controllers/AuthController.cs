@@ -1,4 +1,5 @@
 ﻿using HisuianArchives.Application.DTOs.Auth;
+using HisuianArchives.Application.Orchestrators;
 using HisuianArchives.Application.Services;
 using Microsoft.AspNetCore.Mvc;
 
@@ -12,16 +13,19 @@ namespace HisuianArchives.Api.Controllers;
 public class AuthController : ControllerBase
 {
     private readonly IAuthService _authService;
+    private readonly IUserOnboardingOrchestrator _userOnboardingOrchestrator;
     private readonly ILogger<AuthController> _logger;
 
     /// <summary>
     /// Initializes a new instance of the <see cref="AuthController"/> class.
     /// </summary>
     /// <param name="authService">The authentication service.</param>
+    /// <param name="userOnboardingOrchestrator">The user onboarding orchestrator.</param>
     /// <param name="logger">The logger instance.</param>
-    public AuthController(IAuthService authService, ILogger<AuthController> logger)
+    public AuthController(IAuthService authService, IUserOnboardingOrchestrator userOnboardingOrchestrator, ILogger<AuthController> logger)
     {
         _authService = authService;
+        _userOnboardingOrchestrator = userOnboardingOrchestrator;
         _logger = logger;
     }
 
@@ -37,7 +41,7 @@ public class AuthController : ControllerBase
     {
         _logger.LogInformation("Attempting to register new user with email: {Email}", registerDto.Email);
 
-        var authResponse = await _authService.RegisterAsync(registerDto);
+        var authResponse = await _userOnboardingOrchestrator.RegisterUserAsync(registerDto);
 
         _logger.LogInformation("User {Email} registered and logged in successfully.", registerDto.Email);
 

@@ -33,14 +33,21 @@ public class HisuianArchivesDbContext : DbContext
         });
 
 
-        var customerRoleId = Guid.NewGuid();
-        var proRoleId = Guid.NewGuid();
-        var adminRoleId = Guid.NewGuid();
+        // Use fixed GUIDs for seeded roles to ensure consistency across environments
+        var customerRoleId = new Guid("11111111-1111-1111-1111-111111111111");
+        var proRoleId = new Guid("22222222-2222-2222-2222-222222222222");
+        var adminRoleId = new Guid("33333333-3333-3333-3333-333333333333");
 
-        modelBuilder.Entity<Role>().HasData(
-            new Role { Id = customerRoleId, Name = "Customer" },
-            new Role { Id = proRoleId, Name = "Pro" },
-            new Role { Id = adminRoleId, Name = "Admin" }
-        );
+        // Create roles and set IDs using reflection for seeding
+        var customerRole = new Role("Customer");
+        var proRole = new Role("Pro");
+        var adminRole = new Role("Admin");
+
+        // Set private Id property using reflection
+        typeof(Role).GetProperty("Id")!.SetValue(customerRole, customerRoleId);
+        typeof(Role).GetProperty("Id")!.SetValue(proRole, proRoleId);
+        typeof(Role).GetProperty("Id")!.SetValue(adminRole, adminRoleId);
+
+        modelBuilder.Entity<Role>().HasData(customerRole, proRole, adminRole);
     }
 }

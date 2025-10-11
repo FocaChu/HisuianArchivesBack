@@ -8,7 +8,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace HisuianArchives.Infrastructure.Migrations
 {
     /// <inheritdoc />
-    public partial class InitialModelAndSeed : Migration
+    public partial class InitialCreate : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -44,8 +44,7 @@ namespace HisuianArchives.Infrastructure.Migrations
                     Email = table.Column<string>(type: "varchar(255)", nullable: false)
                         .Annotation("MySql:CharSet", "utf8mb4"),
                     PasswordHash = table.Column<string>(type: "longtext", nullable: false)
-                        .Annotation("MySql:CharSet", "utf8mb4"),
-                    ProfileImageId = table.Column<Guid>(type: "char(36)", nullable: true, collation: "ascii_general_ci")
+                        .Annotation("MySql:CharSet", "utf8mb4")
                 },
                 constraints: table =>
                 {
@@ -83,9 +82,9 @@ namespace HisuianArchives.Infrastructure.Migrations
                 columns: new[] { "Id", "Name" },
                 values: new object[,]
                 {
-                    { new Guid("1937dad9-7fd6-47c5-9b43-9018a95c0d9b"), "Pro" },
-                    { new Guid("89f6988b-3737-4bca-9313-a26d7ad58c2c"), "Admin" },
-                    { new Guid("ce42685b-6801-4bfe-845f-49a4c5aa5b34"), "Customer" }
+                    { new Guid("11111111-1111-1111-1111-111111111111"), "Customer" },
+                    { new Guid("22222222-2222-2222-2222-222222222222"), "Pro" },
+                    { new Guid("33333333-3333-3333-3333-333333333333"), "Admin" }
                 });
 
             migrationBuilder.CreateIndex(

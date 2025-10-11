@@ -6,7 +6,6 @@ namespace HisuianArchives.Infrastructure.Security;
 
 public class PasswordService : IPasswordService
 {
-    // Usamos a ferramenta poderosa da Microsoft por baixo dos panos
     private readonly IPasswordHasher<User> _passwordHasher;
 
     public PasswordService(IPasswordHasher<User> passwordHasher)
@@ -16,8 +15,6 @@ public class PasswordService : IPasswordService
 
     public string HashPassword(string password)
     {
-        // O null! é para satisfazer o método que espera uma instância de User,
-        // mas que na verdade não a utiliza para a operação de hash.
         return _passwordHasher.HashPassword(null!, password);
     }
 
