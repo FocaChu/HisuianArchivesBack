@@ -10,5 +10,4 @@
 	  <ProjectReference Include="..\HisuianArchives.Domain\HisuianArchives.Domain.csproj" />
   </ItemGroup>
 
-
 </Project>

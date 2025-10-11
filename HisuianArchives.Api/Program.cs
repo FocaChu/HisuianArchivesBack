@@ -4,12 +4,11 @@ using HisuianArchives.Application.Interfaces;
 using HisuianArchives.Application.Services;
 using HisuianArchives.Domain.Entities;
 using HisuianArchives.Domain.Repositories;
-using HisuianArchives.Infrastructure.Persistence.Data;
+using HisuianArchives.Infrastructure.Persistence;
 using HisuianArchives.Infrastructure.Repositories;
 using HisuianArchives.Infrastructure.Security;
 using Microsoft.AspNetCore.Diagnostics.HealthChecks;
 using Microsoft.AspNetCore.Identity;
-using Microsoft.EntityFrameworkCore;
 using System.Text.Json.Serialization;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -44,18 +43,8 @@ builder.Services.AddCors(options =>
 });
 
 
-// Configure Entity Framework and MySQL
-var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
-if (string.IsNullOrEmpty(connectionString))
-{
-    throw new InvalidOperationException("The connection string 'DefaultConnection' is not configured.");
-}
-builder.Services.AddDbContext<HisuianArchivesDbContext>(options =>
-    options.UseMySql(connectionString, ServerVersion.AutoDetect(connectionString)));
-
-// Register the DbContext for dependency injection
-builder.Services.AddHealthChecks()
-    .AddMySql(connectionString, name: "MySQL Database");
+// Configure Database
+builder.Services.AddDatabaseConfiguration(builder.Configuration);
 
 // Configure JWT Authentication
 builder.Services.AddJwtAuthentication(builder.Configuration);
