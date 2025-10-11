@@ -7,12 +7,9 @@ using HisuianArchives.Domain.Repositories;
 using HisuianArchives.Infrastructure.Persistence.Data;
 using HisuianArchives.Infrastructure.Repositories;
 using HisuianArchives.Infrastructure.Security;
-using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Diagnostics.HealthChecks;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.IdentityModel.Tokens;
-using System.Text;
 using System.Text.Json.Serialization;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -38,7 +35,7 @@ builder.Services.AddCors(options =>
         policy.WithOrigins
         (
             "http://localhost:4200",
-            "https://hisuian-archives.vercel.app", 
+            "https://hisuian-archives.vercel.app",
             "https://*.ngrok-free.app"
         )
         .AllowAnyHeader()
@@ -61,21 +58,7 @@ builder.Services.AddHealthChecks()
     .AddMySql(connectionString, name: "MySQL Database");
 
 // Configure JWT Authentication
-builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
-    .AddJwtBearer(options =>
-    {
-        var jwtKey = builder.Configuration["Jwt:Key"] ?? throw new InvalidOperationException("Jwt:Key não está configurado.");
-        options.TokenValidationParameters = new TokenValidationParameters
-        {
-            ValidateIssuer = true,
-            ValidateAudience = true,
-            ValidateLifetime = true,
-            ValidateIssuerSigningKey = true,
-            ValidIssuer = builder.Configuration["Jwt:Issuer"],
-            ValidAudience = builder.Configuration["Jwt:Audience"],
-            IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(jwtKey))
-        };
-    });
+builder.Services.AddJwtAuthentication(builder.Configuration);
 
 // Register application services
 builder.Services.AddScoped<IUserRepository, UserRepository>();
@@ -113,7 +96,6 @@ app.MapControllers();
 
 app.MapHealthChecks("/health", new HealthCheckOptions
 {
-    // Este ResponseWriter força a saída a ser um JSON detalhado
     ResponseWriter = UIResponseWriter.WriteHealthCheckUIResponse
 });
 

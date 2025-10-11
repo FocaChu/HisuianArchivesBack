@@ -1,4 +1,4 @@
-﻿using HisuianArchives.Domain.Entities;
+using HisuianArchives.Domain.Entities;
 
 namespace HisuianArchives.Application.Services;
 

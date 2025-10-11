@@ -1,11 +1,12 @@
-﻿using HisuianArchives.Domain.Entities;
+using HisuianArchives.Application.Services;
+using HisuianArchives.Domain.Entities;
 using Microsoft.IdentityModel.Tokens;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
 using Microsoft.Extensions.Configuration;
 
-namespace HisuianArchives.Application.Services;
+namespace HisuianArchives.Infrastructure.Security;
 
 public class TokenService : ITokenService
 {
