@@ -1,4 +1,6 @@
+using AutoMapper;
 using HisuianArchives.Application.Exceptions;
+using HisuianArchives.Application.Extensions;
 using HisuianArchives.Application.Interfaces;
 using HisuianArchives.Domain.Entities;
 using HisuianArchives.Domain.Repositories;
@@ -9,11 +11,13 @@ public class UserService : IUserService
 {
     private readonly IUserRepository _userRepository;
     private readonly IPasswordService _passwordService;
+    private readonly IMapper _mapper;
 
-    public UserService(IUserRepository userRepository, IPasswordService passwordService)
+    public UserService(IUserRepository userRepository, IPasswordService passwordService, IMapper mapper)
     {
         _userRepository = userRepository;
         _passwordService = passwordService;
+        _mapper = mapper;
     }
 
     public async Task<User> CreateUserAsync(string name, string email, string plainPassword, string? bio, Role initialRole)
@@ -37,5 +41,17 @@ public class UserService : IUserService
 
         var userWithRoles = await _userRepository.GetUserByEmailWithRolesAsync(email);
         return userWithRoles!;
+    }
+
+    public async Task<User> UpdateProfileAsync(Guid userId, string newName, string? newBio)
+    {
+        var user = await _userRepository.GetUserByIdAsync(userId) ?? throw new BusinessException("User not found.");
+
+        user.UpdateProfile(newName, newBio); 
+        user.Touch();                        
+
+        await _userRepository.UpdateAsync(user);
+
+        return user!;
     }
 }

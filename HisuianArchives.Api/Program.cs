@@ -1,10 +1,12 @@
 using HealthChecks.UI.Client;
 using HisuianArchives.Api.Middleware;
+using HisuianArchives.Application;
 using HisuianArchives.Application.Interfaces;
 using HisuianArchives.Application.Orchestrators;
 using HisuianArchives.Application.Services;
 using HisuianArchives.Domain.Entities;
 using HisuianArchives.Domain.Repositories;
+using HisuianArchives.Infrastructure;
 using HisuianArchives.Infrastructure.Persistence;
 using HisuianArchives.Infrastructure.Repositories;
 using HisuianArchives.Infrastructure.Security;
@@ -50,16 +52,11 @@ builder.Services.AddDatabaseConfiguration(builder.Configuration);
 // Configure JWT Authentication
 builder.Services.AddJwtAuthentication(builder.Configuration);
 
-// Register application services
-builder.Services.AddScoped<IUserRepository, UserRepository>();
-builder.Services.AddScoped<IRoleRepository, RoleRepository>();
-builder.Services.AddScoped<IPasswordService, PasswordService>();
-builder.Services.AddScoped<ITokenService, TokenService>();
-builder.Services.AddScoped<IAuthService, AuthService>();
-builder.Services.AddScoped<IUserService, UserService>();
-builder.Services.AddScoped<IUserOnboardingOrchestrator, UserOnboardingOrchestrator>();
+// Configure infrastructure 
+builder.Services.AddInfrasructure();
 
-builder.Services.AddScoped<IPasswordHasher<User>, PasswordHasher<User>>();
+// Register application 
+builder.Services.AddApplicationDependencyInjection();
 
 
 var app = builder.Build();

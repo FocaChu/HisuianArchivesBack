@@ -1,6 +1,8 @@
-﻿namespace HisuianArchives.Domain.Entities;
+﻿using HisuianArchives.Domain.Common;
 
-public class User
+namespace HisuianArchives.Domain.Entities;
+
+public class User : IAuditableEntity
 {
     public Guid Id { get; private set; }
 
@@ -10,7 +12,7 @@ public class User
 
     public DateTime CreatedAt { get; private set; }
 
-    public DateTime UpdatedAt { get; private set; }
+    public DateTime UpdatedAt { get; set; }
 
     public string Email { get; private set; }
 
@@ -50,7 +52,6 @@ public class User
             
         Name = name;
         Bio = bio;
-        UpdatedAt = DateTime.UtcNow;
     }
     
     public void UpdateEmail(string email)
@@ -62,7 +63,6 @@ public class User
             throw new ArgumentException("Invalid email format", nameof(email));
             
         Email = email;
-        UpdatedAt = DateTime.UtcNow;
     }
     
     public void ChangePassword(string newPasswordHash)
@@ -71,7 +71,6 @@ public class User
             throw new ArgumentException("Password hash cannot be empty", nameof(newPasswordHash));
             
         PasswordHash = newPasswordHash;
-        UpdatedAt = DateTime.UtcNow;
     }
     
     public void AddRole(Role role)
@@ -82,7 +81,6 @@ public class User
         if (!Roles.Any(r => r.Id == role.Id))
         {
             Roles.Add(role);
-            UpdatedAt = DateTime.UtcNow;
         }
     }
     
@@ -92,7 +90,6 @@ public class User
             throw new ArgumentNullException(nameof(role));
             
         Roles.Remove(role);
-        UpdatedAt = DateTime.UtcNow;
     }
     
     private bool IsValidEmail(string email)
