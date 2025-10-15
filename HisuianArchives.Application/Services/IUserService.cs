@@ -17,4 +17,13 @@ public interface IUserService
     /// <param name="initialRole">The initial role to assign to the user.</param>
     /// <returns>The created user entity with roles loaded.</returns>
     Task<User> CreateUserAsync(string name, string email, string plainPassword, string? bio, Role initialRole);
+
+    /// <summary>
+    /// Updates the profile information of an existing user, including name and biography.
+    /// </summary>
+    /// <param name="userId">The unique identifier of the user to update.</param>
+    /// <param name="newName">The new name for the user.</param>
+    /// <param name="newBio">The new biography for the user (optional).</param>
+    /// <returns>The updated user entity.</returns>
+    Task<User> UpdateProfileAsync(Guid userId, string newName, string? newBio);
 }

@@ -45,7 +45,8 @@ public class UserService : IUserService
 
     public async Task<User> UpdateProfileAsync(Guid userId, string newName, string? newBio)
     {
-        var user = await _userRepository.GetUserByIdAsync(userId) ?? throw new BusinessException("User not found.");
+        var user = await _userRepository.GetUserByIdAsync(userId) ??
+            throw new BusinessException("User not found.");
 
         user.UpdateProfile(newName, newBio); 
         user.Touch();                        
