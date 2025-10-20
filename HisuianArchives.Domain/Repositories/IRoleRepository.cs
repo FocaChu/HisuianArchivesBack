@@ -1,6 +1,4 @@
-﻿using HisuianArchives.Domain.Entities;
-
-namespace HisuianArchives.Domain.Repositories;
+﻿namespace HisuianArchives.Domain.Repositories;
 
 /// <summary>
 /// Defines methods for accessing and managing <see cref="Role"/> entities in the repository.

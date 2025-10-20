@@ -1,5 +1,4 @@
-﻿using HisuianArchives.Application.Services;
-using HisuianArchives.Domain.Common;
+﻿using HisuianArchives.Domain.Common;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.ChangeTracking;
 using Microsoft.EntityFrameworkCore.Diagnostics;

@@ -1,6 +1,4 @@
-﻿using HisuianArchives.Domain.Common;
-
-namespace HisuianArchives.Domain.Entities;
+﻿namespace HisuianArchives.Domain.Entities;
 
 public class User : BaseAuditableEntity<Guid>
 {

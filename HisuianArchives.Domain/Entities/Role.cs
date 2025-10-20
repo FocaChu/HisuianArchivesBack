@@ -1,7 +1,4 @@
-﻿using HisuianArchives.Domain.Common;
-using HisuianArchives.Domain.Entities;
-
-public class Role : BaseEntity<Guid>
+﻿public class Role : BaseEntity<Guid>
 {
     public string Name { get; private set; }
     public virtual ICollection<User> Users { get; private set; } = new List<User>();

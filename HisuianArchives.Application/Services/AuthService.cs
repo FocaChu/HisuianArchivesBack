@@ -1,9 +1,6 @@
 ﻿using AutoMapper;
 using HisuianArchives.Application.DTOs.Auth;
 using HisuianArchives.Application.DTOs.User;
-using HisuianArchives.Application.Exceptions;
-using HisuianArchives.Application.Interfaces;
-using HisuianArchives.Domain.Repositories;
 
 namespace HisuianArchives.Application.Services;
 

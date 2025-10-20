@@ -1,6 +1,4 @@
-﻿using HisuianArchives.Application.Interfaces;
-
-namespace HisuianArchives.Infrastructure.Security;
+﻿namespace HisuianArchives.Infrastructure.Security;
 
 public class BcryptPasswordService : IPasswordService
 {

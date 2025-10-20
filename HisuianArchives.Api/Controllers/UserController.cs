@@ -1,7 +1,5 @@
-﻿using AutoMapper;
-using HisuianArchives.Api.Extensions;
+﻿using HisuianArchives.Api.Extensions;
 using HisuianArchives.Application.DTOs.User;
-using HisuianArchives.Application.Services;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 

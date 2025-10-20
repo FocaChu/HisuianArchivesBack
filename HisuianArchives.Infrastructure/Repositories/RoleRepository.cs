@@ -1,5 +1,4 @@
-﻿using HisuianArchives.Domain.Entities;
-using HisuianArchives.Domain.Repositories;
+﻿using HisuianArchives.Domain.Repositories;
 using HisuianArchives.Infrastructure.Persistence.Data;
 using Microsoft.EntityFrameworkCore;
 

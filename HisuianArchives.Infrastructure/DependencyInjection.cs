@@ -1,6 +1,4 @@
-﻿using HisuianArchives.Application.Interfaces;
-using HisuianArchives.Application.Services;
-using HisuianArchives.Domain.Repositories;
+﻿using HisuianArchives.Domain.Repositories;
 using HisuianArchives.Infrastructure.Persistence.Data;
 using HisuianArchives.Infrastructure.Persistence.Interceptors;
 using HisuianArchives.Infrastructure.Repositories;
