@@ -1,6 +1,5 @@
 using AutoMapper;
 using HisuianArchives.Application.Exceptions;
-using HisuianArchives.Application.Extensions;
 using HisuianArchives.Application.Interfaces;
 using HisuianArchives.Domain.Entities;
 using HisuianArchives.Domain.Repositories;
@@ -49,7 +48,6 @@ public class UserService : IUserService
             throw new BusinessException("User not found.");
 
         user.UpdateProfile(newName, newBio); 
-        user.Touch();                        
 
         await _userRepository.UpdateAsync(user);
 

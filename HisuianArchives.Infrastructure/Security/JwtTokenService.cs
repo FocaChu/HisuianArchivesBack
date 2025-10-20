@@ -8,11 +8,11 @@ using Microsoft.Extensions.Configuration;
 
 namespace HisuianArchives.Infrastructure.Security;
 
-public class TokenService : ITokenService
+public class JwtTokenService : ITokenService
 {
     private readonly IConfiguration _configuration;
 
-    public TokenService(IConfiguration configuration)
+    public JwtTokenService(IConfiguration configuration)
     {
         _configuration = configuration;
     }

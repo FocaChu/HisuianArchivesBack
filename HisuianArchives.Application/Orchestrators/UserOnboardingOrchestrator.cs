@@ -2,7 +2,6 @@ using AutoMapper;
 using HisuianArchives.Application.DTOs.Auth;
 using HisuianArchives.Application.DTOs.User;
 using HisuianArchives.Application.Services;
-using HisuianArchives.Domain.Entities;
 using HisuianArchives.Domain.Repositories;
 
 namespace HisuianArchives.Application.Orchestrators;

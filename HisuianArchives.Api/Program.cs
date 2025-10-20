@@ -27,6 +27,11 @@ builder.Services.AddControllers()
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
+builder.Services
+    .AddApplicationServices()
+    .AddInfrastructureServices(builder.Configuration);
+
+
 // Configure CORS to allow requests from Angular frontend
 var MyAllowSpecificOrigins = "_myAllowSpecificOrigins";
 
@@ -44,19 +49,6 @@ builder.Services.AddCors(options =>
         .AllowAnyMethod();
     });
 });
-
-
-// Configure Database
-builder.Services.AddDatabaseConfiguration(builder.Configuration);
-
-// Configure JWT Authentication
-builder.Services.AddJwtAuthentication(builder.Configuration);
-
-// Configure infrastructure 
-builder.Services.AddInfrasructure();
-
-// Register application 
-builder.Services.AddApplicationDependencyInjection();
 
 
 var app = builder.Build();

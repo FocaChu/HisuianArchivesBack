@@ -1,18 +1,23 @@
-﻿namespace HisuianArchives.Domain.Entities;
+﻿using HisuianArchives.Domain.Common;
+using HisuianArchives.Domain.Entities;
 
-public class Role
+public class Role : BaseEntity<Guid>
 {
-    public Guid Id { get; private set; }
-
     public string Name { get; private set; }
-
     public virtual ICollection<User> Users { get; private set; } = new List<User>();
 
     private Role() { }
 
     public Role(string name)
     {
-        Id = Guid.NewGuid();
+        if (string.IsNullOrWhiteSpace(name))
+            throw new ArgumentException("Role name cannot be empty.", nameof(name));
+
         Name = name;
+    }
+
+    public Role(Guid id, string name) : this(name)
+    {
+        Id = id;
     }
 }

@@ -2,17 +2,11 @@
 
 namespace HisuianArchives.Domain.Entities;
 
-public class User : IAuditableEntity
+public class User : BaseAuditableEntity<Guid>
 {
-    public Guid Id { get; private set; }
-
     public string Name { get; private set; } 
 
     public string? Bio { get; private set; }
-
-    public DateTime CreatedAt { get; private set; }
-
-    public DateTime UpdatedAt { get; set; }
 
     public string Email { get; private set; }
 
@@ -41,8 +35,6 @@ public class User : IAuditableEntity
         Email = email;
         PasswordHash = passwordHash;
         Bio = bio;
-        CreatedAt = DateTime.UtcNow;
-        UpdatedAt = DateTime.UtcNow;
     }
 
     public void UpdateProfile(string name, string? bio)
