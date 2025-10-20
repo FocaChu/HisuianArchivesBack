@@ -1,5 +1,4 @@
-﻿using AutoMapper;
-using HisuianArchives.Application.DTOs.Auth;
+﻿using HisuianArchives.Application.DTOs.Auth;
 using HisuianArchives.Application.DTOs.User;
 
 namespace HisuianArchives.Application.Services;

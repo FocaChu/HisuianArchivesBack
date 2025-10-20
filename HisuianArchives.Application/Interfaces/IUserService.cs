@@ -1,6 +1,6 @@
 using HisuianArchives.Domain.Entities;
 
-namespace HisuianArchives.Application.Services;
+namespace HisuianArchives.Application.Interfaces;
 
 /// <summary>
 /// Provides user management services including user creation and validation.

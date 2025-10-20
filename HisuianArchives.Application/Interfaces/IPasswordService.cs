@@ -1,4 +1,4 @@
-﻿namespace HisuianArchives.Application.Services;
+﻿namespace HisuianArchives.Application.Interfaces;
 
 public interface IPasswordService
 {

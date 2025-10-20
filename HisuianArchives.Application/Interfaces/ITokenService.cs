@@ -1,6 +1,6 @@
 using HisuianArchives.Domain.Entities;
 
-namespace HisuianArchives.Application.Services;
+namespace HisuianArchives.Application.Interfaces;
 
 /// <summary>
 /// Service for generating authentication tokens for users.

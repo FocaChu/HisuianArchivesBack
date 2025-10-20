@@ -1,6 +1,6 @@
 ﻿using HisuianArchives.Application.DTOs.Auth;
 
-namespace HisuianArchives.Application.Services;
+namespace HisuianArchives.Application.Interfaces;
 
 /// <summary>
 /// Provides authentication services for user login.

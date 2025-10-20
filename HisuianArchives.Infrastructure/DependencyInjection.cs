@@ -29,6 +29,7 @@ public static class DependencyInjection
         services
             .AddDatabase(configuration)
             .AddSecurity(configuration)
+            .AddExternalServices()
             .AddRepositories();
 
         return services;
@@ -46,7 +47,7 @@ public static class DependencyInjection
     private static IServiceCollection AddDatabase(this IServiceCollection services, IConfiguration configuration)
     {
         var connectionString = configuration.GetConnectionString("DefaultConnection")
-            ?? throw new InvalidOperationException("A connection string 'DefaultConnection' não está configurada.");
+            ?? throw new InvalidOperationException("The connection string 'DefaultConnection' is not configured.");
 
         services.AddScoped<AuditableEntityInterceptor>();
 
@@ -81,7 +82,7 @@ public static class DependencyInjection
         services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
             .AddJwtBearer(options =>
             {
-                var jwtKey = configuration["Jwt:Key"] ?? throw new InvalidOperationException("Jwt:Key não está configurado.");
+                var jwtKey = configuration["Jwt:Key"] ?? throw new InvalidOperationException("Jwt:Key is not configured.");
                 options.TokenValidationParameters = new TokenValidationParameters
                 {
                     ValidateIssuer = true,
@@ -93,6 +94,13 @@ public static class DependencyInjection
                     IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(jwtKey))
                 };
             });
+
+        return services;
+    }
+
+    private static IServiceCollection AddExternalServices(this IServiceCollection services)
+    {
+        services.AddScoped<IEmailService, BrevoEmailService>();
 
         return services;
     }

@@ -1,5 +1,6 @@
 ﻿using HisuianArchives.Api.Extensions;
 using HisuianArchives.Application.DTOs.User;
+using HisuianArchives.Application.Interfaces;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 

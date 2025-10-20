@@ -1,4 +1,4 @@
-﻿namespace HisuianArchives.Application.Services;
+﻿namespace HisuianArchives.Application.Interfaces;
 
 /// <summary>
 /// Defines a service to obtain information about the user authenticated in the current session.
