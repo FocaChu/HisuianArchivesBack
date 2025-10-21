@@ -14,13 +14,13 @@ public class DispatchDomainEventsInterceptor : SaveChangesInterceptor
         _mediator = mediator;
     }
 
-    public override InterceptionResult<int> SavedChanges(SaveChangesCompletedEventData eventData, InterceptionResult<int> result)
+    public override int SavedChanges(SaveChangesCompletedEventData eventData, int result)
     {
         DispatchEvents(eventData.Context).GetAwaiter().GetResult();
         return base.SavedChanges(eventData, result);
     }
 
-    public override async ValueTask<InterceptionResult<int>> SavedChangesAsync(SaveChangesCompletedEventData eventData, InterceptionResult<int> result, CancellationToken cancellationToken = default)
+    public override async ValueTask<int> SavedChangesAsync(SaveChangesCompletedEventData eventData, int result, CancellationToken cancellationToken = default)
     {
         await DispatchEvents(eventData.Context);
         return await base.SavedChangesAsync(eventData, result, cancellationToken);

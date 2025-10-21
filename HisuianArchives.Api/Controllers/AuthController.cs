@@ -1,6 +1,6 @@
 ﻿using HisuianArchives.Application.DTOs.Auth;
 using HisuianArchives.Application.Features.Users.Commands.CreateUser;
-using MediatR;
+using HisuianArchives.Application.Features.Users.Commands.Login;
 using Microsoft.AspNetCore.Mvc;
 
 namespace HisuianArchives.Api.Controllers;
@@ -64,7 +64,11 @@ public class AuthController : ControllerBase
     {
         _logger.LogInformation("User with email {Email} is attempting to log in.", loginDto.Email);
 
-        var authResponse = await _authService.LoginAsync(loginDto);
+        // Map the DTO to the command
+        var command = _mapper.Map<LoginCommand>(loginDto);
+
+        // Send the command through MediatR
+        var authResponse = await _mediator.Send(command);
 
         _logger.LogInformation("User {Email} logged in successfully.", loginDto.Email);
         return Ok(authResponse);

@@ -1,9 +1,7 @@
 using MediatR;
 using HisuianArchives.Application.DTOs.Auth;
 using HisuianArchives.Application.DTOs.User;
-using HisuianArchives.Application.Interfaces;
 using HisuianArchives.Domain.Entities;
-using HisuianArchives.Domain.Repositories;
 using Microsoft.Extensions.Logging;
 
 namespace HisuianArchives.Application.Features.Users.Commands.CreateUser;
@@ -55,7 +53,7 @@ public class CreateUserCommandHandler : IRequestHandler<CreateUserCommand, AuthR
         var newUser = new User(request.Name, request.Email, passwordHash, request.Bio);
 
         // Get the default "Customer" role
-        var customerRole = await _roleRepository.GetRoleByNameAsync("Customer");
+        var customerRole = await _roleRepository.GetByNameAsync("Customer");
         if (customerRole == null)
         {
             _logger.LogError("Default Customer role not found");

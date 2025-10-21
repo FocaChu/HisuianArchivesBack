@@ -1,6 +1,4 @@
 ﻿using FluentValidation;
-using HisuianArchives.Application.Orchestrators;
-using MediatR;
 using Microsoft.Extensions.DependencyInjection;
 using System.Reflection;
 
@@ -51,34 +49,11 @@ namespace HisuianArchives.Application
         /// <returns>The same <see cref="IServiceCollection"/> instance so calls can be chained.</returns>
         /// <remarks>
         /// Services registered:
-        /// - <see cref="IUserService"/> -> <see cref="UserService"/>
-        /// - <see cref="IAuthService"/> -> <see cref="AuthService"/>
-        /// - <see cref="IUserOnboardingOrchestrator"/> -> <see cref="UserOnboardingOrchestrator"/> (if orchestrators are considered services here)
+        /// - FluentValidation validators from the executing assembly
         /// </remarks>
         public static IServiceCollection AddServices(this IServiceCollection services)
         {
             services.AddValidatorsFromAssembly(Assembly.GetExecutingAssembly());
-
-            services.AddScoped<IUserService, UserService>();
-            services.AddScoped<IAuthService, AuthService>();
-
-            services.AddScoped<IUserOnboardingOrchestrator, UserOnboardingOrchestrator>();
-
-            return services;
-        }
-
-        /// <summary>
-        /// Registers orchestrator classes needed by the application into the dependency injection container.
-        /// </summary>
-        /// <param name="services">The service collection to register orchestrators into.</param>
-        /// <returns>The same <see cref="IServiceCollection"/> instance so calls can be chained.</returns>
-        /// <remarks>
-        /// Orchestrators encapsulate higher-level flows and coordinate multiple services.
-        /// Register each orchestrator here to keep registrations organized and discoverable.
-        /// </remarks>
-        public static IServiceCollection AddApplicationOrchestrators(this IServiceCollection services)
-        {
-            services.AddScoped<IUserOnboardingOrchestrator, UserOnboardingOrchestrator>();
 
             return services;
         }
@@ -91,7 +66,7 @@ namespace HisuianArchives.Application
         /// <returns>The same <see cref="IServiceCollection"/> instance so calls can be chained.</returns>
         /// <remarks>
         /// This is a convenience method that aggregates <see cref="AddMediatR"/>,
-        /// <see cref="AddApplicationMapping"/>, <see cref="AddServices"/> and <see cref="AddApplicationOrchestrators"/> to ensure
+        /// <see cref="AddApplicationMapping"/> and <see cref="AddServices"/> to ensure
         /// all required application dependencies are registered in one call.
         /// </remarks>
         public static IServiceCollection AddApplicationServices(this IServiceCollection services)
@@ -99,7 +74,6 @@ namespace HisuianArchives.Application
             services.AddMediatR();
             services.AddApplicationMapping();
             services.AddServices();
-            services.AddApplicationOrchestrators();
 
             return services;
         }

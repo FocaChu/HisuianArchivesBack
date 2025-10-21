@@ -1,6 +1,5 @@
 ﻿using MediatR;
 using HisuianArchives.Domain.Events;
-using HisuianArchives.Infrastructure.Services;
 using Microsoft.Extensions.Logging;
 
 namespace HisuianArchives.Application.Features.Users.EventHandlers;
