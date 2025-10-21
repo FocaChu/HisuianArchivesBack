@@ -1,4 +1,5 @@
-﻿using HisuianArchives.Application.Orchestrators;
+﻿using FluentValidation;
+using HisuianArchives.Application.Orchestrators;
 using Microsoft.Extensions.DependencyInjection;
 using System.Reflection;
 
@@ -39,6 +40,8 @@ namespace HisuianArchives.Application
         /// </remarks>
         public static IServiceCollection AddServices(this IServiceCollection services)
         {
+            services.AddValidatorsFromAssembly(Assembly.GetExecutingAssembly());
+
             services.AddScoped<IUserService, UserService>();
             services.AddScoped<IAuthService, AuthService>();
 

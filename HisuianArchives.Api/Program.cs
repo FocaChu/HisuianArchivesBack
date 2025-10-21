@@ -1,28 +1,24 @@
 using HealthChecks.UI.Client;
+using HisuianArchives.Api.Filters;
 using HisuianArchives.Api.Middleware;
 using HisuianArchives.Application;
-using HisuianArchives.Application.Interfaces;
-using HisuianArchives.Application.Orchestrators;
-using HisuianArchives.Application.Services;
-using HisuianArchives.Domain.Entities;
-using HisuianArchives.Domain.Repositories;
 using HisuianArchives.Infrastructure;
-using HisuianArchives.Infrastructure.Persistence;
-using HisuianArchives.Infrastructure.Repositories;
-using HisuianArchives.Infrastructure.Security;
 using Microsoft.AspNetCore.Diagnostics.HealthChecks;
-using Microsoft.AspNetCore.Identity;
 using System.Text.Json.Serialization;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 
-builder.Services.AddControllers()
+builder.Services.AddControllers(options =>
+{
+    options.Filters.Add<ValidationFilter>();
+})
     .AddJsonOptions(options =>
     {
         options.JsonSerializerOptions.Converters.Add(new JsonStringEnumConverter());
     });
+
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
