@@ -1,5 +1,6 @@
 ﻿using FluentValidation;
 using HisuianArchives.Application.Orchestrators;
+using MediatR;
 using Microsoft.Extensions.DependencyInjection;
 using System.Reflection;
 
@@ -11,6 +12,22 @@ namespace HisuianArchives.Application
     /// </summary>
     public static class DependencyInjection
     {
+        /// <summary>
+        /// Registers MediatR and scans the executing assembly for handlers, commands, queries and event handlers.
+        /// </summary>
+        /// <param name="services">The service collection to add the MediatR registrations to.</param>
+        /// <returns>The same <see cref="IServiceCollection"/> instance so calls can be chained.</returns>
+        /// <remarks>
+        /// This method calls <c>services.AddMediatR</c> with the currently executing assembly
+        /// to automatically discover and register all MediatR handlers defined in this project.
+        /// </remarks>
+        public static IServiceCollection AddMediatR(this IServiceCollection services)
+        {
+            services.AddMediatR(cfg => cfg.RegisterServicesFromAssembly(Assembly.GetExecutingAssembly()));
+
+            return services;
+        }
+
         /// <summary>
         /// Registers AutoMapper and scans the executing assembly for AutoMapper profiles.
         /// </summary>
@@ -73,12 +90,13 @@ namespace HisuianArchives.Application
         /// <param name="services">The service collection to register application services into.</param>
         /// <returns>The same <see cref="IServiceCollection"/> instance so calls can be chained.</returns>
         /// <remarks>
-        /// This is a convenience method that aggregates <see cref="AddApplicationMapping"/>,
-        /// <see cref="AddServices"/> and <see cref="AddApplicationOrchestrators"/> to ensure
+        /// This is a convenience method that aggregates <see cref="AddMediatR"/>,
+        /// <see cref="AddApplicationMapping"/>, <see cref="AddServices"/> and <see cref="AddApplicationOrchestrators"/> to ensure
         /// all required application dependencies are registered in one call.
         /// </remarks>
         public static IServiceCollection AddApplicationServices(this IServiceCollection services)
         {
+            services.AddMediatR();
             services.AddApplicationMapping();
             services.AddServices();
             services.AddApplicationOrchestrators();

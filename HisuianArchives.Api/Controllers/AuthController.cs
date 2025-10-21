@@ -1,4 +1,6 @@
 ﻿using HisuianArchives.Application.DTOs.Auth;
+using HisuianArchives.Application.Features.Users.Commands.CreateUser;
+using MediatR;
 using Microsoft.AspNetCore.Mvc;
 
 namespace HisuianArchives.Api.Controllers;
@@ -10,20 +12,20 @@ namespace HisuianArchives.Api.Controllers;
 [Route("api/[controller]")]
 public class AuthController : ControllerBase
 {
-    private readonly IAuthService _authService;
-    private readonly IUserOnboardingOrchestrator _userOnboardingOrchestrator;
+    private readonly IMediator _mediator;
+    private readonly IMapper _mapper;
     private readonly ILogger<AuthController> _logger;
 
     /// <summary>
     /// Initializes a new instance of the <see cref="AuthController"/> class.
     /// </summary>
-    /// <param name="authService">The authentication service.</param>
-    /// <param name="userOnboardingOrchestrator">The user onboarding orchestrator.</param>
+    /// <param name="mediator">The MediatR mediator for handling commands and queries.</param>
+    /// <param name="mapper">The AutoMapper instance for object mapping.</param>
     /// <param name="logger">The logger instance.</param>
-    public AuthController(IAuthService authService, IUserOnboardingOrchestrator userOnboardingOrchestrator, ILogger<AuthController> logger)
+    public AuthController(IMediator mediator, IMapper mapper, ILogger<AuthController> logger)
     {
-        _authService = authService;
-        _userOnboardingOrchestrator = userOnboardingOrchestrator;
+        _mediator = mediator;
+        _mapper = mapper;
         _logger = logger;
     }
 
@@ -39,7 +41,11 @@ public class AuthController : ControllerBase
     {
         _logger.LogInformation("Attempting to register new user with email: {Email}", registerDto.Email);
 
-        var authResponse = await _userOnboardingOrchestrator.RegisterUserAsync(registerDto);
+        // Map the DTO to the command
+        var command = _mapper.Map<CreateUserCommand>(registerDto);
+
+        // Send the command through MediatR
+        var authResponse = await _mediator.Send(command);
 
         _logger.LogInformation("User {Email} registered and logged in successfully.", registerDto.Email);
 

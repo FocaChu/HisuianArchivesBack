@@ -50,12 +50,14 @@ public static class DependencyInjection
             ?? throw new InvalidOperationException("The connection string 'DefaultConnection' is not configured.");
 
         services.AddScoped<AuditableEntityInterceptor>();
+        services.AddScoped<DispatchDomainEventsInterceptor>();
 
         services.AddDbContext<HisuianArchivesDbContext>((serviceProvider, options) =>
         {
-            var interceptor = serviceProvider.GetRequiredService<AuditableEntityInterceptor>();
+            var auditableInterceptor = serviceProvider.GetRequiredService<AuditableEntityInterceptor>();
+            var domainEventsInterceptor = serviceProvider.GetRequiredService<DispatchDomainEventsInterceptor>();
             options.UseMySql(connectionString, ServerVersion.AutoDetect(connectionString))
-                   .AddInterceptors(interceptor);
+                   .AddInterceptors(auditableInterceptor, domainEventsInterceptor);
         });
 
         services.AddHealthChecks().AddMySql(connectionString, name: "MySQL Database");

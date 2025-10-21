@@ -37,6 +37,8 @@ public class User : BaseAuditableEntity<Guid>
         Email = email;
         PasswordHash = passwordHash;
         Bio = bio;
+
+        this.AddDomainEvent(new UserCreatedEvent(this));
     }
 
     public void UpdateProfile(string name, string? bio)
