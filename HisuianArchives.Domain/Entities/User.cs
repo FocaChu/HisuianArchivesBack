@@ -10,6 +10,10 @@ public class User : BaseAuditableEntity<Guid>
 
     public string PasswordHash { get; private set; }
 
+    public Guid? ProfileImageId { get; private set; }
+
+    public Image? ProfileImage { get; private set; }
+
     public virtual ICollection<Role> Roles { get; private set; } = new List<Role>();
 
     private User() { }
@@ -81,7 +85,13 @@ public class User : BaseAuditableEntity<Guid>
             
         Roles.Remove(role);
     }
-    
+
+    public void SetProfileImage(Guid? imageId)
+    {
+         ProfileImageId = imageId;
+    }
+
+
     private bool IsValidEmail(string email)
     {
         try

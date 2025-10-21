@@ -26,4 +26,6 @@ public interface IUserService
     /// <param name="newBio">The new biography for the user (optional).</param>
     /// <returns>The updated user entity.</returns>
     Task<User> UpdateProfileAsync(Guid userId, string newName, string? newBio);
+
+    Task<User> UpdateUserProfileImageAsync(Guid userId, Guid imageId);
 }

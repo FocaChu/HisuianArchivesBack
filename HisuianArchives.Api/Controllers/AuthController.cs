@@ -1,5 +1,4 @@
 ﻿using HisuianArchives.Application.DTOs.Auth;
-using HisuianArchives.Application.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 
 namespace HisuianArchives.Api.Controllers;

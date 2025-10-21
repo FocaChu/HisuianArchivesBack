@@ -1,4 +1,5 @@
 using HisuianArchives.Domain.Entities;
+using HisuianArchives.Domain.Repositories;
 
 namespace HisuianArchives.Application.Services;
 
@@ -6,12 +7,14 @@ public class UserService : IUserService
 {
     private readonly IUserRepository _userRepository;
     private readonly IPasswordService _passwordService;
+    private readonly IImageRepository _imageRepository;
     private readonly IMapper _mapper;
 
-    public UserService(IUserRepository userRepository, IPasswordService passwordService, IMapper mapper)
+    public UserService(IUserRepository userRepository, IPasswordService passwordService,  IMapper mapper, IImageRepository imageRepository)
     {
         _userRepository = userRepository;
         _passwordService = passwordService;
+        _imageRepository = imageRepository;
         _mapper = mapper;
     }
 
@@ -48,5 +51,31 @@ public class UserService : IUserService
         await _userRepository.UpdateAsync(user);
 
         return user!;
+    }
+
+    public async Task<User> UpdateUserProfileImageAsync(Guid userId, Guid imageId)
+    {
+        var image = await _imageRepository.GetByIdAsync(imageId);
+        if (image == null)
+        {
+            throw new BusinessException("Image not found.");
+        }
+
+        if (image.OwnerId != userId)
+        {
+            throw new BusinessException("You do not have permission to use this image.");
+        }
+
+        var user = await _userRepository.GetUserByIdAsync(userId);
+        if (user == null)
+        {
+            throw new BusinessException("User not found.");
+        }
+
+        user.SetProfileImage(imageId);
+
+        await _userRepository.UpdateAsync(user);
+
+        return user;
     }
 }

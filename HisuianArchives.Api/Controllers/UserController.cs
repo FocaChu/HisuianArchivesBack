@@ -1,6 +1,5 @@
 ﻿using HisuianArchives.Api.Extensions;
 using HisuianArchives.Application.DTOs.User;
-using HisuianArchives.Application.Interfaces;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
@@ -32,6 +31,17 @@ namespace HisuianArchives.Api.Controllers
 
             var responseDto = _mapper.Map<UserSummaryResponseDto>(updatedUser);
 
+            return Ok(responseDto);
+        }
+
+        [HttpPut("me/profile-image")]
+        public async Task<IActionResult> UpdateProfileImage([FromBody] UpdateProfileImageRequestDto dto)
+        {
+            var userId = User.GetCurrentUserId();
+
+            var updatedUser = await _userService.UpdateUserProfileImageAsync(userId, dto.ImageId);
+
+            var responseDto = _mapper.Map<UserSummaryResponseDto>(updatedUser);
             return Ok(responseDto);
         }
     }

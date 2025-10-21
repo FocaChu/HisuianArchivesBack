@@ -101,6 +101,7 @@ public static class DependencyInjection
     private static IServiceCollection AddExternalServices(this IServiceCollection services)
     {
         services.AddScoped<IEmailService, BrevoEmailService>();
+        services.AddScoped<IFileStorageService, MinioFileStorageService>();
 
         return services;
     }
@@ -114,6 +115,7 @@ public static class DependencyInjection
     {
         services.AddScoped<IRoleRepository, RoleRepository>();
         services.AddScoped<IUserRepository, UserRepository>();
+        services.AddScoped<IImageRepository, ImageRepository>();
 
         return services;
     }

@@ -7,8 +7,11 @@ public class HisuianArchivesDbContext : DbContext
 {
     public HisuianArchivesDbContext(DbContextOptions<HisuianArchivesDbContext> options) : base(options) { }
 
-    public DbSet<User> Users { get; set; }
     public DbSet<Role> Roles { get; set; }
+
+    public DbSet<User> Users { get; set; }
+
+    public DbSet<Image> Images { get; set; }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {

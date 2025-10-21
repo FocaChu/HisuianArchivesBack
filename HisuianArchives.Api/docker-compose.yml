@@ -17,20 +17,18 @@ services:
       - hisuian_db_data:/var/lib/mysql
       
   minio:
-    image: minio/minio:RELEASE.2023-07-21T21-12-44Z 
-    container_name: hisuian-minio
-    restart: always
-    environment:
-      MINIO_ROOT_USER: minioadmin 
-      MINIO_ROOT_PASSWORD: minioadmin_password 
+    image: minio/minio:latest
+    container_name: hisuian_archives_minio
     ports:
-      - "9000:9000"
-      - "9001:9001"
+      - "9000:9000"  
+      - "9001:9001"  
+    environment:
+      - MINIO_ROOT_USER=minioadmin   
+      - MINIO_ROOT_PASSWORD=minioadmin 
     volumes:
-      - hisuian_minio_data:/data
-
+      - minio_data:/data
     command: server /data --console-address ":9001"
 
 volumes:
   hisuian_db_data:
-  hisuian_minio_data:
+  minio_data:

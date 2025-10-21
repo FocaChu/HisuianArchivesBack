@@ -13,6 +13,8 @@ public class UserSummaryResponseDto
 
     public string Email { get; set; } = null!;
 
+    public Guid? ProfileImageId { get; set; }
+
     public DateTimeOffset Created { get; set; }
 
     public DateTimeOffset LastModified { get; set; }
