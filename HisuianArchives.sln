@@ -1,26 +1,34 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
-VisualStudioVersion = 17.14.36511.14 d17.14
+VisualStudioVersion = 17.14.36511.14
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HisuianArchives.Api", "HisuianArchives.Api\HisuianArchives.Api.csproj", "{CB2651BF-03FF-477B-8480-3218D7521C46}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HisuianArchives.Api", "src\HisuianArchives.Api\HisuianArchives.Api.csproj", "{CB2651BF-03FF-477B-8480-3218D7521C46}"
+	ProjectSection(ProjectDependencies) = postProject
+		{A160917B-B006-457B-BBB7-0748AF3CAAD3} = {A160917B-B006-457B-BBB7-0748AF3CAAD3}
+		{E012F34E-18AF-4E27-9F6B-E57D8B52F655} = {E012F34E-18AF-4E27-9F6B-E57D8B52F655}
+	EndProjectSection
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HisuianArchives.Domain", "src\HisuianArchives.Domain\HisuianArchives.Domain.csproj", "{5979D1FA-F50C-417F-B415-578A3303D8D2}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HisuianArchives.Application", "src\HisuianArchives.Application\HisuianArchives.Application.csproj", "{A160917B-B006-457B-BBB7-0748AF3CAAD3}"
+	ProjectSection(ProjectDependencies) = postProject
+		{5979D1FA-F50C-417F-B415-578A3303D8D2} = {5979D1FA-F50C-417F-B415-578A3303D8D2}
+	EndProjectSection
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HisuianArchives.Infrastructure", "src\HisuianArchives.Infrastructure\HisuianArchives.Infrastructure.csproj", "{22D9A8F0-8301-46C0-906B-11AE31613C78}"
+	ProjectSection(ProjectDependencies) = postProject
+		{5979D1FA-F50C-417F-B415-578A3303D8D2} = {5979D1FA-F50C-417F-B415-578A3303D8D2}
+		{A160917B-B006-457B-BBB7-0748AF3CAAD3} = {A160917B-B006-457B-BBB7-0748AF3CAAD3}
+	EndProjectSection
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CompositionRoot", "src\CompositionRoot\CompositionRoot.csproj", "{E012F34E-18AF-4E27-9F6B-E57D8B52F655}"
 	ProjectSection(ProjectDependencies) = postProject
 		{22D9A8F0-8301-46C0-906B-11AE31613C78} = {22D9A8F0-8301-46C0-906B-11AE31613C78}
 		{A160917B-B006-457B-BBB7-0748AF3CAAD3} = {A160917B-B006-457B-BBB7-0748AF3CAAD3}
 	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HisuianArchives.Domain", "HisuianArchives.Domain\HisuianArchives.Domain.csproj", "{5979D1FA-F50C-417F-B415-578A3303D8D2}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HisuianArchives.Application", "HisuianArchives.Application\HisuianArchives.Application.csproj", "{A160917B-B006-457B-BBB7-0748AF3CAAD3}"
-	ProjectSection(ProjectDependencies) = postProject
-		{5979D1FA-F50C-417F-B415-578A3303D8D2} = {5979D1FA-F50C-417F-B415-578A3303D8D2}
-	EndProjectSection
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HisuianArchives.Infrastructure", "HisuianArchives.Infrastructure\HisuianArchives.Infrastructure.csproj", "{22D9A8F0-8301-46C0-906B-11AE31613C78}"
-	ProjectSection(ProjectDependencies) = postProject
-		{5979D1FA-F50C-417F-B415-578A3303D8D2} = {5979D1FA-F50C-417F-B415-578A3303D8D2}
-		{A160917B-B006-457B-BBB7-0748AF3CAAD3} = {A160917B-B006-457B-BBB7-0748AF3CAAD3}
-	EndProjectSection
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AdminPanel", "src\AdminPanel\AdminPanel.csproj", "{035C900D-FDED-4A92-8ABD-372439DD0CCC}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -44,6 +52,14 @@ Global
 		{22D9A8F0-8301-46C0-906B-11AE31613C78}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{22D9A8F0-8301-46C0-906B-11AE31613C78}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{22D9A8F0-8301-46C0-906B-11AE31613C78}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E012F34E-18AF-4E27-9F6B-E57D8B52F655}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E012F34E-18AF-4E27-9F6B-E57D8B52F655}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E012F34E-18AF-4E27-9F6B-E57D8B52F655}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E012F34E-18AF-4E27-9F6B-E57D8B52F655}.Release|Any CPU.Build.0 = Release|Any CPU
+		{035C900D-FDED-4A92-8ABD-372439DD0CCC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{035C900D-FDED-4A92-8ABD-372439DD0CCC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{035C900D-FDED-4A92-8ABD-372439DD0CCC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{035C900D-FDED-4A92-8ABD-372439DD0CCC}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
