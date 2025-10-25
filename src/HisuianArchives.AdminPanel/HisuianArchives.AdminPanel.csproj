@@ -1,14 +1,15 @@
 <Project Sdk="Microsoft.NET.Sdk.Web">
 
-  <PropertyGroup>
-    <TargetFramework>net8.0</TargetFramework>
-    <Nullable>enable</Nullable>
-    <ImplicitUsings>enable</ImplicitUsings>
-  </PropertyGroup>
+	<PropertyGroup>
+		<TargetFramework>net8.0</TargetFramework>
+		<Nullable>enable</Nullable>
+		<ImplicitUsings>enable</ImplicitUsings>
+		<UserSecretsId>bbdc92f4-74f0-4779-a989-4f77e3945d57</UserSecretsId>
+	</PropertyGroup>
 
-  <ItemGroup>
-    <ProjectReference Include="..\CompositionRoot\HisuianArchives.CompositionRoot.csproj" />
-    <ProjectReference Include="..\HisuianArchives.Application\HisuianArchives.Application.csproj" />
-  </ItemGroup>
+	<ItemGroup>
+		<ProjectReference Include="..\CompositionRoot\HisuianArchives.CompositionRoot.csproj" />
+		<ProjectReference Include="..\HisuianArchives.Application\HisuianArchives.Application.csproj" />
+	</ItemGroup>
 
 </Project>
