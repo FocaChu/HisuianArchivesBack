@@ -9,7 +9,7 @@
 	</PropertyGroup>
 
 	<ItemGroup>
-		<ProjectReference Include="..\CompositionRoot\CompositionRoot.csproj" />
+		<ProjectReference Include="..\CompositionRoot\HisuianArchives.CompositionRoot.csproj" />
 		<ProjectReference Include="..\HisuianArchives.Application\HisuianArchives.Application.csproj" />
 	</ItemGroup>
 

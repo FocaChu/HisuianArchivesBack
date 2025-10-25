@@ -1,4 +1,4 @@
-using AdminPanel.Components;
+using HisuianArchives.AdminPanel.Components;
 
 var builder = WebApplication.CreateBuilder(args);
 

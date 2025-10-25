@@ -2,6 +2,28 @@ version: '3.8'
 
 services:
 
+  api:
+    build:
+      context: ./src/HisuianArchives.Api
+      dockerfile: Dockerfile
+      args:
+        # define um UID padrão para USER no Dockerfile (evita erro se $APP_UID não estiver definido)
+        APP_UID: 1000
+        # opcional: force Debug build quando estiver em dev
+        BUILD_CONFIGURATION: Debug
+    image: hisuianarchives-api:latest
+    container_name: hisuian-api
+    restart: unless-stopped
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - ASPNETCORE_URLS=http://+:8080
+      - DOTNET_RUNNING_IN_CONTAINER=true
+    ports:
+      - "8080:8080"
+    depends_on:
+      - db
+      - minio
+
   db:
     image: mysql:8.0.33 
     container_name: hisuian-db 

@@ -52,6 +52,31 @@ public class LoginCommandHandler : IRequestHandler<LoginCommand, AuthResponseDto
             throw new BusinessException("Invalid email or password.");
         }
 
+        // Check if user is banned and handle ban expiration
+        if (!user.IsActive)
+        {
+            if (user.BannedUntil == null)
+            {
+                // Permanent ban
+                _logger.LogWarning("Login failed: user {Email} is permanently banned", request.Email);
+                throw new BusinessException("Your account has been permanently banned.");
+            }
+            else if (DateTimeOffset.UtcNow >= user.BannedUntil)
+            {
+                // Ban has expired, automatically unban the user
+                _logger.LogInformation("Ban expired for user {Email}, automatically unbanning", request.Email);
+                user.Unban();
+                await _userRepository.UpdateAsync(user);
+            }
+            else
+            {
+                // Ban is still active
+                var banExpiration = user.BannedUntil.Value.ToString("yyyy-MM-dd HH:mm:ss");
+                _logger.LogWarning("Login failed: user {Email} is banned until {BanExpiration}", request.Email, banExpiration);
+                throw new BusinessException($"Your account is banned until {banExpiration}. Reason: {user.BannedReason}");
+            }
+        }
+
         // Generate JWT token
         var token = _tokenService.GenerateJwtToken(user);
 

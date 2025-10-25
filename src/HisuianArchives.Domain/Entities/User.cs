@@ -10,6 +10,12 @@ public class User : BaseAuditableEntity<Guid>
 
     public string PasswordHash { get; private set; }
 
+    public bool IsActive { get; private set; } = true;
+
+    public string? BannedReason { get; private set; }
+
+    public DateTimeOffset? BannedUntil { get; private set; }
+
     public Guid? ProfileImageId { get; private set; }
 
     public Image? ProfileImage { get; private set; }
@@ -93,6 +99,25 @@ public class User : BaseAuditableEntity<Guid>
          ProfileImageId = imageId;
     }
 
+    public void Ban(string reason, DateTimeOffset? until)
+    {
+        if (!IsActive && BannedUntil == null)
+            throw new InvalidOperationException("User is already banned");
+
+        IsActive = false;
+        BannedReason = reason;
+        BannedUntil = until;
+    }
+
+    public void Unban()
+    {
+        if (IsActive)
+            throw new InvalidOperationException("User is not banned");
+
+        IsActive = true;
+        BannedReason = null;
+        BannedUntil = null;
+    }
 
     private bool IsValidEmail(string email)
     {

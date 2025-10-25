@@ -3,6 +3,7 @@ using HisuianArchives.Application.DTOs.Auth;
 using HisuianArchives.Application.DTOs.Image;
 using HisuianArchives.Application.DTOs.User;
 using HisuianArchives.Application.Features.Images.Commands.UploadImage;
+using HisuianArchives.Application.Features.Users.Commands.BanUser;
 using HisuianArchives.Application.Features.Users.Commands.CreateUser;
 using HisuianArchives.Application.Features.Users.Commands.Login;
 using HisuianArchives.Application.Features.Users.Commands.UpdateProfile;
@@ -34,5 +35,9 @@ public class CommandProfile : Profile
         // Map ImageUploadRequestDto to UploadImageCommand
         CreateMap<ImageUploadRequestDto, UploadImageCommand>()
             .ForMember(dest => dest.UserId, opt => opt.Ignore()); // Will be set from the authenticated user
+            
+        // Map BanUserRequestDto to BanUserCommand
+        CreateMap<BanUserRequestDto, BanUserCommand>()
+            .ForMember(dest => dest.UserId, opt => opt.Ignore()); // Will be set from the route parameter
     }
 }
